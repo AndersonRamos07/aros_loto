@@ -1,37 +1,44 @@
 const puppeteer = require('puppeteer');
 
 const add = async (form, dados) => {
-  const browser = await puppeteer.launch({ headless: false, slowMo: 150, args: ['--window-size=1366,720',] });
+
+  const tab = async (qtd)=>{
+    var i = 0;
+    do{ i++; await page.keyboard.press('Tab');
+    } while (i < qtd);
+  }
+  const browser = await puppeteer.launch({ headless: false, slowMo: 150, args:[
+    '--start-maximized' // you can also use '--start-fullscreen'
+ ]});
   const page = await browser.newPage();
   console.log(dados);
-  await page.goto('https://www.uscis.gov/sites/default/files/document/forms/g-1145.pdf');
+  await page.goto(`https://www.uscis.gov/sites/default/files/document/forms/${form}.pdf`);
   page.waitForNavigation();
 
-  var i = 0;
-  do{
-    i++;
-    await page.keyboard.press('Tab');
-  } while (i < 14);
+  await page.waitForSelector('body > embed');
+
+  await page.click('body > embed');
+  await tab(2);
+
+  //await tab(15);
 
   await page.keyboard.type(dados.lastName);
-  await page.keyboard.press('Tab');
+  await tab(1)
   await page.keyboard.type(dados.firstName);
-  await page.keyboard.press('Tab');
-  await page.keyboard.press('Tab');
+  await tab(2)
   await page.keyboard.type(dados.email);
-  await page.keyboard.press('Tab');
+  await tab(1)
   await page.keyboard.type(dados.phone);
-  await page.keyboard.press('Tab');
+  await tab(16);
 
-  const nomePDF = dados.firstName + '.pdf'
+  //await page.click([0]);
 
-  console.log(nomePDF + ' - <nomePDF>')
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('G-1145_' + dados.firstName + '.pdf');
+  await tab(2);
+  await page.keyboard.press('Enter');
 
-  await page.emulateMediaType('screen');
-
-  await page.pdf({ path: nomePDF });
-
-  await browser.close();
 
 };
 
