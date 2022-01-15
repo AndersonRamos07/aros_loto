@@ -25,11 +25,31 @@ const conferirEscolhaConjuge = () => {
     return true;
 }
 
-const conferirEscolhaFilho = () => {
+const conferirEscolhaFilho = () =>{
     var escolha = document.querySelector('input[name=filho]:checked').value;
+
+    if(escolha != '9'){
+        criarFieldSets(escolha);
+    }
+    else if (escolha == '9'){
+        var qtdFilhos = document.querySelector('#qtdFilhos').value;
+        document.querySelector('#qtdFilhos').focus();
+    }
+}
+
+const criarFieldSets = (pEscolha) => {
     var maisDe3 = document.querySelector('#qtdFilhos').value;
 
+    const limpe = () =>{
+        var divsFilho = document.querySelectorAll('.Filho');
+        for (var i=0; i < divsFilho.length; i++){
+            divsFilho[i].remove();
+        }
+        return true;
+    }
+
     const crie = (qtd) =>{
+        limpe();
         var i = 0;
         do{
             i++;
@@ -37,21 +57,8 @@ const conferirEscolhaFilho = () => {
         }
         while(i < qtd);
     }
-    const remova = () =>{
-        var i = 0;
-        do{
-            i++;
-            var divFilho = document.querySelectorAll('.Filho');
-            console.log('<divFilho> - '+ divFilho)
-            if(divFilho){
-                divFilho.remove();
-            }
-        }
-        while(i < divFilho.length);
-        return divFilho;
-    }
 
-    switch(escolha){
+    switch(pEscolha){
         case '1':
             crie(1);
             break;
@@ -62,13 +69,15 @@ const conferirEscolhaFilho = () => {
             crie(3);
             break;
         case '9':
-            escolha = maisDe3;
-            crie(escolha);
+            pEscolha = maisDe3;
+            limpe();
+            crie(pEscolha);
             break;
         case 'no':
-            remova();
+            limpe();
+            break;
     }
-    console.log('<escolhaFilho> - '+escolha);
+    console.log('<escolhaFilho> - '+pEscolha);
 
     return true;
 }
@@ -82,7 +91,7 @@ const criarForm = (parentesco) => {
     }
     campo.setAttribute('id', parentesco)
     var legenda = document.createElement('legend');
-        legenda.innerText = parentesco;
+        legenda.innerText = `INFORMAÇÕES DE CONTATO - ${parentesco}`;
     var sobrenome = criaInput('lastName', 'Sobrenome');
     //console.log(sobrenome);
     var nome = criaInput('firstName', 'Nome');
