@@ -26,15 +26,22 @@ const conferirEscolhaConjuge = () => {
 }
 
 const conferirEscolhaFilho = () =>{
+    var document.querySelector('#qtdFilhos').value = '';
     var escolha = document.querySelector('input[name=filho]:checked').value;
 
     if(escolha != '9'){
         criarFieldSets(escolha);
     }
     else if (escolha == '9'){
-        var qtdFilhos = document.querySelector('#qtdFilhos').value;
-        document.querySelector('#qtdFilhos').focus();
+        var quantos = async () => { document.querySelector('#qtdFilhos') };
+        await quantos.setAttributeNode('disabled','false');
+        await quantos.focus();
     }
+}
+
+const escolhaMaior3 = () =>{
+    var maisDe3 = document.querySelector('#qtdFilhos').value;
+    criarFieldSets(maisDe3);
 }
 
 const criarFieldSets = (pEscolha) => {

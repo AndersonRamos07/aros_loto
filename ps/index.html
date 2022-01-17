@@ -7,7 +7,7 @@
     <script src='script.js'></script>
   </head>
   <body>
-    <fieldset onchange='conferirEscolhaConjuge()'>
+    <fieldset onchange='conferirEscolhaConjuge()' required>
       <legend>Possui conjuge?</legend>
       <input type='radio' name='conjuge' value='no'>
       <label for='nao'>Não</label>
@@ -28,20 +28,20 @@
       <input type='radio' name='filho' value='9'>
       <label for='9'>Sim, mais de 3.</label>
       <label for='sim'>Quantos?</label>
-      <input type='number' name='filho' id='qtdFilhos' oninput="conferirEscolhaFilho()">
+      <input type='number' name='filho' id='qtdFilhos' oninput='criarFieldSets()' required disabled='true'>
     </fieldset>
     
     <form action='/add' method='post'>
       <fieldset>
         <legend>INFORMAÇÕES DE CONTATO</legend>
         <label for='lastName'>Sobrenome:</label>
-        <input id='lastName' name='lastName' type='text'><br>
+        <input id='lastName' name='lastName' type='text' required><br>
         <label for='firstName'>Nome:</label>
-        <input id='firstName' name='firstName' type='text'><br>
+        <input id='firstName' name='firstName' type='text' required><br>
         <label for='email'>E-mail:</label>
-        <input id='email' name='email' type='text'><br>
+        <input id='email' name='email' type='text' required><br>
         <label for='phone'>Telefone:</label>
-        <input id='phone' name='phone' type='text'>
+        <input id='phone' name='phone' type='text' required>
       </fieldset>
       <fieldset id='botao'>
         <button id='enviar' action='submit'>Enviar</button>
