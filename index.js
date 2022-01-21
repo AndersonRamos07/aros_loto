@@ -12,13 +12,9 @@ server.use(bodyParser.json());
 
 const form = require('./forms/addForm');
 
-server.get('/', (req, res)=>{
-  //res.send('Hello World!')
-  res.sendFile(__dirname + '/ps/index.html')
-})
-server.get('/script.js', (req, res)=>{
-  res.sendFile(__dirname + '/ps/script.js')
-})
+server.get('/', (req, res)=>{ res.sendFile(__dirname + '/ps/index.html')})
+server.get('/script.js', (req, res)=>{ res.sendFile(__dirname + '/ps/script.js')})
+server.get('/styles.css', (req, res)=>{ res.sendFile(__dirname + '/ps/styles.css')})
 
 server.post('/confirm', (req, res)=>{
   var dados = {

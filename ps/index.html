@@ -4,31 +4,51 @@
     <title>
       TESTE DE FORM
     </title>
+    <link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
     <script src='script.js'></script>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
   </head>
   <body>
     <fieldset onchange='conferirEscolhaConjuge()' required>
       <legend>Possui conjuge?</legend>
-      <input type='radio' name='conjuge' value='no'>
-      <label for='nao'>Não</label>
-      <input type='radio' name='conjuge' value='yes'>
-      <label for='sim'>Sim</label>
+      <label class='question'>
+        <input type='radio' name='conjuge' value='no'>
+        <span>Não</span>
+      </label>
+      <label class='question'>
+        <input type='radio' name='conjuge' value='yes'>
+        <span>Sim</span>
+      </label>
     </fieldset>
 
     <fieldset onchange='conferirEscolhaFilho()'>
       <legend>Possui filho(s)?</legend>
-      <input type='radio' name='filho' value='no'>
-      <label for='nao'>Não</label>
-      <input type='radio' name='filho' value='1'>
-      <label for='1'>Sim, 1 apenas.</label>
-      <input type='radio' name='filho' value='2'>
-      <label for='2'>Sim, 2.</label>
-      <input type='radio' name='filho' value='3'>
-      <label for='3'>Sim, 3.</label><br>
-      <input type='radio' name='filho' value='9'>
-      <label for='9'>Sim, mais de 3.</label>
-      <label for='sim'>Quantos?</label>
-      <input type='number' name='filho' id='qtdFilhos' disabled='true' required oninput='escolhaMaior3()' onfocusout='deveEscolher()' >
+      <label class='question'>
+        <input type='radio' name='filho' value='no'>
+        <span>Não</span>
+      </label>
+      <label class='question'>
+        <input type='radio' name='filho' value='1'>
+        <span>Sim, 1 apenas.</span>
+      </label>
+      <label class='question'>
+        <input type='radio' name='filho' value='2'>
+        <span>Sim, 2.</span>
+      </label>
+      <label class='question'>
+        <input type='radio' name='filho' value='3'>
+        <span>Sim, 3.</span><br>
+      </label>
+      <label class='question'>
+        <input type='radio' name='filho' value='9'>
+        <span>Sim, mais de 3.</span>
+      </label>
+      <label class='question'>
+        <span>Quantos?</span>
+        <input type='number' name='filho' id='qtdFilhos' disabled='true' required oninput='escolhaMaior3()' onfocusout='deveEscolher()' >
+      </label>
     </fieldset>
     
     <form action='/add' method='post'>

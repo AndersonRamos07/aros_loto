@@ -118,12 +118,21 @@ const criarForm = (parentesco) => {
     return true
  }
 
- const deveEscolher = () =>{
+ const deveEscolher = async () =>{
      var campoDeEscolha = document.querySelector('#qtdFilhos');
      var valorDeEscolha = campoDeEscolha.value;
      if(valorDeEscolha == 0 || valorDeEscolha == ''){
-         alert('Favor informar a quantidade de filhos!');
-         campoDeEscolha.focus();
+         const {value : qtdFilhos } = await Swal.fire({
+            title: 'Quantos filhos?',
+            text: 'Favor informe a quantidade de filhos!',
+            icon: 'question',
+            confirmButtonText: 'OK',
+            input: 'text'            
+          })
+          if(qtdFilhos != 0){
+              campoDeEscolha.value = qtdFilhos;
+          }
+          criarFieldSets(qtdFilhos);
      }
      else(criarFieldSets(valorDeEscolha));     
  }
