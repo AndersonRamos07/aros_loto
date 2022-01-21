@@ -28,7 +28,7 @@
       <input type='radio' name='filho' value='9'>
       <label for='9'>Sim, mais de 3.</label>
       <label for='sim'>Quantos?</label>
-      <input type='number' name='filho' id='qtdFilhos' oninput='criarFieldSets()' required disabled='true'>
+      <input type='number' name='filho' id='qtdFilhos' disabled='true' required oninput='escolhaMaior3()' onfocusout='deveEscolher()' >
     </fieldset>
     
     <form action='/add' method='post'>

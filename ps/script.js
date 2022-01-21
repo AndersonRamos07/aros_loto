@@ -25,17 +25,19 @@ const conferirEscolhaConjuge = () => {
     return true;
 }
 
-const conferirEscolhaFilho = () =>{
-    var document.querySelector('#qtdFilhos').value = '';
+const conferirEscolhaFilho = async () =>{
+    var quantos = document.querySelector('#qtdFilhos');
+    document.querySelector('#qtdFilhos').value = '';
     var escolha = document.querySelector('input[name=filho]:checked').value;
 
     if(escolha != '9'){
+        quantos.setAttribute('disabled', 'true');
         criarFieldSets(escolha);
     }
-    else if (escolha == '9'){
-        var quantos = async () => { document.querySelector('#qtdFilhos') };
-        await quantos.setAttributeNode('disabled','false');
-        await quantos.focus();
+    if (escolha == '9'){
+        console.log('aqui')
+        quantos.removeAttribute('disabled');
+        quantos.focus();
     }
 }
 
@@ -57,12 +59,15 @@ const criarFieldSets = (pEscolha) => {
 
     const crie = (qtd) =>{
         limpe();
-        var i = 0;
-        do{
-            i++;
-            criarForm(`Filho(${i})`);
+        if(qtd != 0 || qtd != ''){
+            var i = 0;
+            do{
+                i++;
+                criarForm(`Filho(${i})`);
+            }
+            while(i < qtd);
         }
-        while(i < qtd);
+
     }
 
     switch(pEscolha){
@@ -83,6 +88,8 @@ const criarFieldSets = (pEscolha) => {
         case 'no':
             limpe();
             break;
+            default:
+            crie(pEscolha);
     }
     console.log('<escolhaFilho> - '+pEscolha);
 
@@ -91,32 +98,32 @@ const criarFieldSets = (pEscolha) => {
 
 const criarForm = (parentesco) => {
     var campo = document.createElement('fieldset');
-    if(parentesco[0] == 'F'){
-        campo.className = 'Filho';
-    }else{
-        campo.className = parentesco;
-    }
+    if(parentesco[0] == 'F'){ campo.className = 'Filho'; }
+    else{ campo.className = parentesco; }
     campo.setAttribute('id', parentesco)
     var legenda = document.createElement('legend');
         legenda.innerText = `INFORMAÇÕES DE CONTATO - ${parentesco}`;
     var sobrenome = criaInput('lastName', 'Sobrenome');
-    //console.log(sobrenome);
     var nome = criaInput('firstName', 'Nome');
-    //console.log(nome);
     var email = criaInput('email', 'Email');
-    //console.log(email);
     var telefone = criaInput('phone', 'Telefone');
-    //console.log(telefone);
         campo.appendChild(legenda);
         campo.appendChild(sobrenome);
         campo.appendChild(nome);
         campo.appendChild(email);
         campo.appendChild(telefone);
-
     var form = document.querySelector('form');
     var botaoDeEnviar = document.querySelector('#botao');
-
     form.insertBefore(campo, botaoDeEnviar);
-
     return true
+ }
+
+ const deveEscolher = () =>{
+     var campoDeEscolha = document.querySelector('#qtdFilhos');
+     var valorDeEscolha = campoDeEscolha.value;
+     if(valorDeEscolha == 0 || valorDeEscolha == ''){
+         alert('Favor informar a quantidade de filhos!');
+         campoDeEscolha.focus();
+     }
+     else(criarFieldSets(valorDeEscolha));     
  }
