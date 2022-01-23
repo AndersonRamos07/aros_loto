@@ -1,29 +1,69 @@
 const puppeteer = require('puppeteer');
-
 const fs = require('fs');
-const pdfDoc = require('pdfkit');
-const blobStream = require('blob-stream');
+const https = require('https');
 
-const { DownloaderHelper } = require('node-downloader-helper');
+const pdf = require('pdf-parser');
 
-var pdfFillForm = require('pdf-fill-form');
-
-var pdfFields = pdfFillForm.readSync('test.pdf');
-console.log(pdfFields);
+const PDFLib = require('pdf-lib');
+const PDFDocument = PDFLib.PDFDocument;
 
 /*
-const doc = new pdfDoc;
-doc.pipe(fs.createWriteStream(__dirname + '/path/file.pdf')); 
-doc.addContent('page');
-doc.end();
+const preencherForm = () =>{
+const local = __dirname + '/g-1145_thr.pdf';
+
+  const arq = __dirname + `\forms\g-1145.pdf`;
+
+  let dataBuffer = fs.readFileSync(local);
+ 
+ pdf(dataBuffer).then(function(data){
+  // number of pages
+  console.log(data.numpages);
+  // number of rendered pages
+  console.log(data.numrender);
+  // PDF info
+  console.log(data.info);
+  // PDF metadata
+  console.log(data.metadata); 
+  // PDF.js version
+  // check https://mozilla.github.io/pdf.js/getting_started/
+  console.log(data.version);
+  // PDF text
+  console.log(data.text);
+});
+
+  /*
+  const g1145 = fs.readFile(arq, {ArrayBuffer}, (err, data)=>{
+    if (err) {
+        reject(err); // in the case of error, control flow goes to the catch block with the error occured.
+    }
+    else{
+        resolve(data);  // in the case of success, control flow goes to the then block with the content of the file.
+    }
+});
+
+  //fs.readFile(__dirname + '/forms/g-1145.pdf');
+
+ // const pdfDoc = await PDFDocument.load(g1145);
+
+  //const form = pdfDoc.getForm();
+
+  //console.log(form);
+  //console.table(form);
+
+  //const pdfBytes = await pdfDoc.save();
+
+  //const result = fs.writeFile(__dirname + '/forms/result.pdf', pdfBytes)
+
+};
 */
+
 
 const urlPage = `https://www.uscis.gov/sites/default/files/document/forms/g-1145.pdf`;
 
 //#region NOVA_PAGINA
 const newPage = async (form) =>{
 
-  const browser = await puppeteer.launch({ headless: false, slowMo: 150, args:[
+  const browser = await puppeteer.launch({ waitUntil: "networkidle0", headless: true, /*slowMo: 150,*/ args:[
     '--start-maximized' // you can also use '--start-fullscreen'
  ]});
   const page = await browser.newPage();
@@ -58,23 +98,37 @@ const add = async (form, dados) => {
   await page.keyboard.type(dados.email);
   await tab(1)
   await page.keyboard.type(dados.phone);
-  //await tab(16);
 
-  const dl = new DownloaderHelper( urlPage , __dirname);
-    dl.on('end', () => console.log('Download Completed'))
-    dl.start();
+  const restpdf = await page.pdf({
+    printBackground: true,
+    format: "Letter",
+    path: "webpage.pdf",
+    margin: {
+        top: "20px",
+        bottom: "40px",
+        left: "20px",
+        right: "20px"
+    }
+  });
+  await page.close();
+
+  return restpdf;
 };
 
-const confirm = async (dados) =>{
-  
+const salvar = () =>{
+const arquivo = fs.createWriteStream("arquivo.pdf");
+const request = https.get(`https://www.uscis.gov/sites/default/files/document/forms/g-1145.pdf`, function(response) {
+  response.pipe(arquivo);
+});
+return request
 }
 
-module.exports = { add }
+const pdfLido = async () =>{
+  const pdfTodo = await salvar();
 
-/*
-  await page.keyboard.press('Enter');
-  await page.keyboard.press('Enter');
-  await page.keyboard.type('G-1145_' + dados.firstName + '.pdf');
-  await tab(2);
-  await page.keyboard.press('Enter');
-*/
+  const tudo = await PDFDocument.load(pdfTodo);
+
+  console.log(tudo)
+}
+
+module.exports = { add /*, preencherForm*/ , salvar , pdfLido }

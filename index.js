@@ -38,10 +38,22 @@ server.post('/add', (req, res)=>{
     "phone": req.body.phone}
   var resultado = form.add('g-1145', dados);
 
+  console.log(resultado + '<resultado>' + typeof(resultado))
+
+  console.table(resultado)
+
   res.status(200).send('Hello World')
 
-  //res.send('Hello World!')
-  //res.sendFile(__dirname + '/ps/index.html')
+  res.contentType('application/pdf');
+  res.send(resultado)
+})
+
+server.post('/acc', async (req, res) =>{
+ // var resultado = form.preencherForm();
+ // var resultado = form.salvar();
+ var resultado = await form.pdfLido();
+ console.log(resultado);
+  res.redirect('/')
 })
 
 server.listen(PORT, () =>{
