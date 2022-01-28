@@ -15,7 +15,7 @@ const criaInput = (nome, etiqueta) =>{
     return div;
 }
 
-const criarForm = (parentesco) => {
+const criarForm = (parentesco) =>{
     var campo = document.createElement('fieldset');
     if(parentesco[0] == 'F'){ campo.className = 'Filho'; }
     else{ campo.className = parentesco; }
@@ -35,9 +35,9 @@ const criarForm = (parentesco) => {
     var botaoDeEnviar = document.querySelector('#botao');
     form.insertBefore(campo, botaoDeEnviar);
     return true
- }
+}
 
-const conferirEscolhaConjuge = () => {
+const conferirEscolhaConjuge = () =>{
     var escolha = document.querySelector('input[type=radio]:checked').value;
     var divConjuge = document.querySelector('.Conjuge');
     if(escolha == 'yes'){ criarForm('Conjuge') }
@@ -70,8 +70,7 @@ const escolhaMaior3 = () =>{
     campo.setAttribute('disabled', 'true');
 }
 
-
-const criarFieldSets = (pEscolha) => {
+const criarFieldSets = (pEscolha) =>{
     var maisDe3 = document.querySelector('#qtdFilhos').value;
 
     const limpe = () =>{
@@ -139,4 +138,4 @@ const criarFieldSets = (pEscolha) => {
           criarFieldSets(qtdFilhos);
      }
      else(criarFieldSets(valorDeEscolha));     
- }
+}

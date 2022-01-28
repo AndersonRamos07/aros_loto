@@ -1,71 +1,33 @@
 const puppeteer = require('puppeteer');
 const http = require('http');
 const fs = require('fs');
-//const https = require('https');
+const path = require('path');
 
-//const pdf = require('pdf-parser');
+const dividirInfos = (objetos) =>{
+  var agora = objetos.lastName.length;
+  var dados = [];
 
-//const PDFLib = require('pdf-lib');
-//const PDFDocument = PDFLib.PDFDocument;
-
-/*
-const preencherForm = () =>{
-const local = __dirname + '/g-1145_thr.pdf';
-
-  const arq = __dirname + `\forms\g-1145.pdf`;
-
-  let dataBuffer = fs.readFileSync(local);
- 
- pdf(dataBuffer).then(function(data){
-  // number of pages
-  console.log(data.numpages);
-  // number of rendered pages
-  console.log(data.numrender);
-  // PDF info
-  console.log(data.info);
-  // PDF metadata
-  console.log(data.metadata); 
-  // PDF.js version
-  // check https://mozilla.github.io/pdf.js/getting_started/
-  console.log(data.version);
-  // PDF text
-  console.log(data.text);
-});
-
-  /*
-  const g1145 = fs.readFile(arq, {ArrayBuffer}, (err, data)=>{
-    if (err) {
-        reject(err); // in the case of error, control flow goes to the catch block with the error occured.
+  for(var i=0; i < agora; i++){
+    let dadosForm =
+    {
+      "lastName": objetos.lastName[i],
+      "firstName": objetos.firstName[i],
+      "email": objetos.email[i],
+      "phone": objetos.phone[i]
     }
-    else{
-        resolve(data);  // in the case of success, control flow goes to the then block with the content of the file.
-    }
-});
-
-  //fs.readFile(__dirname + '/forms/g-1145.pdf');
-
- // const pdfDoc = await PDFDocument.load(g1145);
-
-  //const form = pdfDoc.getForm();
-
-  //console.log(form);
-  //console.table(form);
-
-  //const pdfBytes = await pdfDoc.save();
-
-  //const result = fs.writeFile(__dirname + '/forms/result.pdf', pdfBytes)
-
-};
-*/
-
+  dados.push(dadosForm);
+  }
+  console.table(dados);
+  return console.log(dados + '\n' + '<return dados>');
+}
 
 //#region NOVA_PAGINA
 const newPage = async (form, dados) =>{
   const urlPage = `https://www.uscis.gov/sites/default/files/document/forms/${form}.pdf`;
 
-  const browser = await puppeteer.launch({ waitUntil: "networkidle0", headless: false, slowMo: 150, args:[
-    '--start-maximized', `--load-extension=pdfjs-dist/build/pdf.worker` // you can also use '--start-fullscreen'
- ]});
+  const browser = await puppeteer.launch({ dumpio: true, waitUntil: "networkidle0", headless: false, slowMo: 150, args:[
+    '--start-maximized'//, `--load-extension=pdfjs-dist/build/pdf.worker` // you can also use '--start-fullscreen'
+  ]});
   const page = await browser.newPage();
   await page.goto(urlPage);
   page.waitForNavigation();
@@ -95,12 +57,52 @@ const newPage = async (form, dados) =>{
   await tab(1)
   await page.keyboard.type(dados.phone);
 
-  page.on('request', requisicao =>{
+  //await page.emulateMediaType('print');
+
+  const arquivoPDF = await page.pdf({
+    path: path.join(__dirname, 'g-aros.pdf'),
+    format: 'A4'
+  })
+
+  await browser.close();
+
+  //#region
+  
+  /*await page.evaluate((href) => {
+    href = page.url();
+    var body = document.getElementsByTagName('body');
+    var alink = document.createElement('a');
+    var texto = document.createTextNode('Clique aqui');
+    alink.setAttribute('href', href);
+    alink.setAttribute('download', '');
+    alink.className('forCLick');
+    alink.appendChild(texto);
+    body.appendChild(alink);
+  })
+  page.waitForNavigation();
+
+  await page.waitForSelector('body > a');
+
+  await page.click('body > a');
+
+  console.log('deve ter ido...');
+*/
+
+
+  /*const image = await page.evaluate(function() {
+    return document.querySelector('body > embed');
+  });*/
+  //await page.$eval('body > embed', e => e.setAttribute("download", ''))
+
+
+  /*page.on('request', requisicao =>{
     const file = fs.createWriteStream('../file.pdf');
     http.get(requisicao.url(), response => response.pipe(file));
-  });
+  });*/
 
-  return page;
+  //#endregion
+
+  return arquivoPDF;
 }
 //#endregion
 
@@ -180,4 +182,4 @@ const pdfLido = async () =>{
 }
 */
 
-module.exports = { newPage /*, add , preencherForm , salvar , pdfLido */ }
+module.exports = { newPage , dividirInfos /*, add , preencherForm , salvar , pdfLido */ }

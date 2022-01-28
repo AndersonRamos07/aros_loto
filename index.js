@@ -9,8 +9,8 @@ const bodyParser = require('body-parser');
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
 
-
-const form = require('./forms/addForm');
+//const form = require('./forms/forms.js');
+const form = require('./forms/addFormC');
 
 server.get('/', (req, res)=>{ res.sendFile(__dirname + '/ps/index.html')})
 server.get('/script.js', (req, res)=>{ res.sendFile(__dirname + '/ps/script.js')})
@@ -22,12 +22,9 @@ server.post('/confirm', (req, res)=>{
     "firstName": req.body.firstName,
     "email": req.body.email,
     "phone": req.body.phone }
-  var resultado = form.add('g-1145', dados);
+  var resultado = form.newPage('g-1145', dados);
 
   res.status(200).send('Hello World')
-
-  //res.send('Hello World!')
-  //res.sendFile(__dirname + '/ps/index.html')
 })
 
 server.post('/add', (req, res)=>{
@@ -36,26 +33,22 @@ server.post('/add', (req, res)=>{
     "firstName": req.body.firstName,
     "email": req.body.email,
     "phone": req.body.phone}
-  var resultado = form.add('g-1145', dados);
+    var quantidade = form.dividirInfos(dados);
+  //var resultado = form.newPage('g-1145', dados);
 
-  console.log(resultado + '<resultado>' + typeof(resultado))
+  //console.log('<resultado>' + typeof(resultado))  //console.table(resultado)  //res.contentType('application/pdf');  //res.send(resultado)
 
-  console.table(resultado)
-
-  res.status(200).send('Hello World')
-
-  res.contentType('application/pdf');
-  res.send(resultado)
+  res.status(200).write('Hello World!')
 })
 
 server.post('/acc', async (req, res) =>{
  // var resultado = form.preencherForm();
- // var resultado = form.salvar();
- var resultado = await form.pdfLido();
- console.log(resultado);
-  res.redirect('/')
+ var resultado = form.salvar();
+ //var resultado = await form.pdfLido();
+ //console.log(resultado);
+  //res.redirect('/')
 })
 
 server.listen(PORT, () =>{
   console.log(`Servidor rodando na porta http://localhost:${PORT}`);
-})
+});
