@@ -19,6 +19,7 @@
     "express": "^4.17.2",
     "fetch": "^1.1.0",
     "fs": "0.0.1-security",
+    "fs.promises": "^0.1.2",
     "https": "^1.0.0",
     "node-downloader-helper": "^1.0.19",
     "path": "^0.12.7",

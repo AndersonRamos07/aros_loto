@@ -51,7 +51,7 @@
       </label>
     </fieldset>
     
-    <form action='/confirm' method='post'>
+    <form action='/add' method='post'>
       <fieldset>
         <legend>INFORMAÇÕES DE CONTATO</legend>
         <label for='lastName'>Sobrenome:</label>
@@ -63,8 +63,37 @@
         <label for='phone'>Telefone:</label>
         <input id='phone' name='phone' type='text' required>
       </fieldset>
-      <fieldset id='botao'>
-        <button id='enviar' type='submit'>Enviar</button>
+      <fieldset id='confirm'>
+        <fieldset>
+          <legend>QUAIS FORMULÁRIOS SERÃO PREENCHIDOS?</legend>
+          <label>
+            <input id='G-1145' type='checkbox' name='G-1145' value='g-1145'>
+            <span>G-1145</span>
+          </label>
+          <label>
+            <input id='I-131' type='checkbox' name='I-131' value='i-131'>
+            <span>I-131</span>
+          </label>
+          <label>
+            <input id='I-140' type='checkbox' name='I-140' value='i-140'>
+            <span>I-140</span>
+          </label>
+          <br>
+          <label>
+            <input id='I-485' type='checkbox' name='I-485' value='i-485'>
+            <span>I-485</span>
+          </label>
+          <label>
+            <input id='I-765' type='checkbox' name='I-765' value='i-765'>
+            <span>I-765</span>
+          </label>
+          <label>
+            <input id='ETA-750B' type='checkbox' name='ETA-750B' value='eta-750b'>
+            <span>ETA-750B</span>
+          </label>
+        </fieldset>
+          <button id='enviar' type='submit'>Enviar</button>
+        </label>
       </fieldset>
       </form>
 

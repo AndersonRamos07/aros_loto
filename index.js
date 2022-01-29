@@ -10,7 +10,7 @@ server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
 
 //const form = require('./forms/forms.js');
-const form = require('./forms/addFormC');
+const form = require('./forms/preencheForm');
 
 server.get('/', (req, res)=>{ res.sendFile(__dirname + '/ps/index.html')})
 server.get('/script.js', (req, res)=>{ res.sendFile(__dirname + '/ps/script.js')})
@@ -28,17 +28,16 @@ server.post('/confirm', (req, res)=>{
 })
 
 server.post('/add', (req, res)=>{
+  console.table(req.body);
   var dados = {
     "lastName": req.body.lastName,
     "firstName": req.body.firstName,
     "email": req.body.email,
     "phone": req.body.phone}
-    var quantidade = form.dividirInfos(dados);
-  //var resultado = form.newPage('g-1145', dados);
+    var quantidade = form.conferirDados(dados);
 
-  //console.log('<resultado>' + typeof(resultado))  //console.table(resultado)  //res.contentType('application/pdf');  //res.send(resultado)
-
-  res.status(200).write('Hello World!')
+  res.status(200).write('Dados enviados.');
+  res.redirect('/');
 })
 
 server.post('/acc', async (req, res) =>{
