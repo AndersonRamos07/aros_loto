@@ -11,6 +11,7 @@ server.use(bodyParser.json());
 
 //const form = require('./forms/forms.js');
 const form = require('./forms/preencheForm');
+const { values } = require('pdf-lib');
 
 server.get('/', (req, res)=>{ res.sendFile(__dirname + '/ps/index.html')})
 server.get('/script.js', (req, res)=>{ res.sendFile(__dirname + '/ps/script.js')})
@@ -28,16 +29,22 @@ server.post('/confirm', (req, res)=>{
 })
 
 server.post('/add', (req, res)=>{
-  console.table(req.body);
-  var dados = {
+  //console.table(req.body);
+  //console.table(req.body.nForm)
+  /*var dados = {
     "lastName": req.body.lastName,
     "firstName": req.body.firstName,
     "email": req.body.email,
-    "phone": req.body.phone}
+    "phone": req.body.phone,
+    "forms": req.body.nForm.map(e=> e)}
+    */
+   var dados = req.body;
+   console.log('<<dados>>');
+   console.log(dados)
+   console.log('<<dados>>');
     var quantidade = form.conferirDados(dados);
 
   res.status(200).write('Dados enviados.');
-  res.redirect('/');
 })
 
 server.post('/acc', async (req, res) =>{

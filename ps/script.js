@@ -17,22 +17,22 @@ const criaInput = (nome, etiqueta) =>{
 
 const criarForm = (parentesco) =>{
     var campo = document.createElement('fieldset');
-    if(parentesco[0] == 'F'){ campo.className = 'Filho'; }
+    if(parentesco[0] == 'F'){ campo.className = `Filho`; }
     else{ campo.className = parentesco; }
     campo.setAttribute('id', parentesco)
     var legenda = document.createElement('legend');
         legenda.innerText = `INFORMAÇÕES DE CONTATO - ${parentesco}`;
-    var sobrenome = criaInput('lastName', 'Sobrenome');
-    var nome = criaInput('firstName', 'Nome');
-    var email = criaInput('email', 'Email');
-    var telefone = criaInput('phone', 'Telefone');
+    var sobrenome = criaInput(`lastName_${parentesco}`, 'Sobrenome');
+    var nome = criaInput(`firstName_${parentesco}`, 'Nome');
+    var email = criaInput(`email_${parentesco}`, 'Email');
+    var telefone = criaInput(`phone_${parentesco}`, 'Telefone');
         campo.appendChild(legenda);
         campo.appendChild(sobrenome);
         campo.appendChild(nome);
         campo.appendChild(email);
         campo.appendChild(telefone);
     var form = document.querySelector('form');
-    var botaoDeEnviar = document.querySelector('#botao');
+    var botaoDeEnviar = document.querySelector('#form');
     form.insertBefore(campo, botaoDeEnviar);
     return true
 }

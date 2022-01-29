@@ -52,53 +52,32 @@
     </fieldset>
     
     <form action='/add' method='post'>
-      <fieldset>
+      <fieldset id='main'>
         <legend>INFORMAÇÕES DE CONTATO</legend>
-        <label for='lastName'>Sobrenome:</label>
-        <input id='lastName' name='lastName' type='text' required><br>
-        <label for='firstName'>Nome:</label>
-        <input id='firstName' name='firstName' type='text' required><br>
-        <label for='email'>E-mail:</label>
-        <input id='email' name='email' type='text' required><br>
-        <label for='phone'>Telefone:</label>
-        <input id='phone' name='phone' type='text' required>
+        <label><span>Sobrenome:</span><input id='lastName' name='lastName' type='text' required></label><br>
+        <label><span>Nome:</span><input id='firstName' name='firstName' type='text' required></label><br>
+        <label><span>E-mail:</span><input id='email' name='email' type='text' required></label><br>
+        <label><span>Telefone:</span><input id='phone' name='phone' type='text' required></label>
       </fieldset>
-      <fieldset id='confirm'>
-        <fieldset>
-          <legend>QUAIS FORMULÁRIOS SERÃO PREENCHIDOS?</legend>
-          <label>
-            <input id='G-1145' type='checkbox' name='G-1145' value='g-1145'>
-            <span>G-1145</span>
-          </label>
-          <label>
-            <input id='I-131' type='checkbox' name='I-131' value='i-131'>
-            <span>I-131</span>
-          </label>
-          <label>
-            <input id='I-140' type='checkbox' name='I-140' value='i-140'>
-            <span>I-140</span>
-          </label>
-          <br>
-          <label>
-            <input id='I-485' type='checkbox' name='I-485' value='i-485'>
-            <span>I-485</span>
-          </label>
-          <label>
-            <input id='I-765' type='checkbox' name='I-765' value='i-765'>
-            <span>I-765</span>
-          </label>
-          <label>
-            <input id='ETA-750B' type='checkbox' name='ETA-750B' value='eta-750b'>
-            <span>ETA-750B</span>
-          </label>
-        </fieldset>
-          <button id='enviar' type='submit'>Enviar</button>
-        </label>
+      <fieldset id='form'>
+        <legend>QUAIS FORMULÁRIOS SERÃO PREENCHIDOS?</legend>
+        <label><input id='G-1145' type='checkbox' name='nForm' value='g-1145'><span>G-1145</span></label>
+        <label><input id='I-131' type='checkbox' name='nForm' value='i-131'><span>I-131</span></label>
+        <label><input id='I-140' type='checkbox' name='nForm' value='i-140'><span>I-140</span></label>
+        <label><input id='I-485' type='checkbox' name='nForm' value='i-485'><span>I-485</span></label>
+        <label><input id='I-765' type='checkbox' name='nForm' value='i-765'><span>I-765</span></label>
+        <label><input id='ETA-750B' type='checkbox' name='nForm' value='eta-750b'><span>ETA-750B</span></label>
       </fieldset>
-      </form>
+      <fieldset id='btnSend'>
+        <button id='enviar' type='submit'>Enviar</button>
+      </fieldset>
+    </form>
 
-      <form action='/acc' method='post'>
-        <button type='submit'>Acionar (acc)</button>
-      </form>
+<!-- BUTTON ACC
+  <form action='/acc' method='post'>
+    <button type='submit'>Acionar (acc)</button>
+  </form>
+-->
+  
   </body>
   </html>
